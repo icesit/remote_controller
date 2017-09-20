@@ -12,7 +12,7 @@ using namespace std;
 int main(int argc, char** argv) {
     ros::init(argc, argv,"RemoteController");
     ros::NodeHandle n;
-    ros::Rate r(100);
+    ros::Rate r(200);
 
     RMcontroller rmc(&n);
 
@@ -22,5 +22,7 @@ int main(int argc, char** argv) {
         ros::spinOnce();
         r.sleep();
     }
+
+    ros::shutdown();
     return 0;
 }

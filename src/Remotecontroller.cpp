@@ -140,7 +140,7 @@ void RMcontroller::work()
     }
 
     pubAll();
-    display();
+    //display();
 }
 
 int RMcontroller::joystick_open(char *cp_js_dev_name, int i4_block)
@@ -353,29 +353,29 @@ void RMcontroller::display()
         if(myjoybutton.but[i])
         {
             //std::cout << "  " << i << "   buttom pressed!   \r";
-            printf("  %d   buttom pressed!   \r", i);
+            printf("  %d   buttom pressed!   \n", i);
             return;
         }
     }
     if(myjoybutton.start)
     {
         //std::cout << "start buttom pressed!   \r";
-        printf("START buttom pressed!   \r");
+        printf("START buttom pressed!   \n");
         return;
     }
     if(myjoybutton.back)
     {
         //std::cout << " back buttom pressed!   \r";
-        printf(" BACK buttom pressed!   \r");
+        printf(" BACK buttom pressed!   \n");
         return;
     }
     if(myjoybutton.home)
     {
-        printf(" HOME buttom pressed!   \r");
+        printf(" HOME buttom pressed!   \n");
         return;
     }
 
-    std::cout << "  no  buttom pressed!   \r";
+    std::cout << "  no  buttom pressed!   \n";
 //    if(myjoybutton.axisleft_lr)
 //    {
 //        cout << "left axis lr " << -myjoybutton.axisleft_lr << "/32768\r";
