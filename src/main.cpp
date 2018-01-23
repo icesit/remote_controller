@@ -12,11 +12,11 @@ using namespace std;
 int main(int argc, char** argv) {
     ros::init(argc, argv,"RemoteController");
     ros::NodeHandle n;
-    ros::Rate r(200);
+    ros::Rate r(ONESECOND);
 
     RMcontroller rmc(&n);
 
-    cout << "joystick_thread start!" << endl;
+    cout << "[JOYSTICK]joystick_thread start!" << endl;
     while (ros::ok()){
         rmc.work();
         ros::spinOnce();

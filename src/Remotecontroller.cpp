@@ -4,7 +4,7 @@
 LIST_HEAD(_t_js_ctx_head);
 
 RMcontroller::RMcontroller(ros::NodeHandle *_nh):
-    nh(_nh), tp_axes(NULL)
+    nh(_nh), tp_axes(NULL), cnt(0)
 {
     initJoystick();
     initPublisher();
@@ -18,8 +18,20 @@ RMcontroller::~RMcontroller()
     }
 }
 
-void RMcontroller::work()
+bool RMcontroller::work()
 {
+    if(++cnt > ONESECOND)
+    {
+        cnt = 0;
+        if(access("/dev/input/js0", 0) == -1){
+            resetAllKey();
+            pubAll();
+            printf("[JOYSTICK]joystick lost!\n");
+            joystick_close(js_fd);
+            initJoystick();
+            return false;
+        }
+    }
     if (joystick_read_ready(js_fd)) {
         rc = joystick_read_one_event(js_fd, &jse);
         if (rc > 0) {
@@ -138,9 +150,17 @@ void RMcontroller::work()
             }
         }
     }
+//    else
+//    {
+//        cout << "[JOYSTICK]joystick lost!" <<endl;
+//        resetAllKey();
+//        pubAll();
+//        initJoystick();
+//    }
 
     pubAll();
     //display();
+    return true;
 }
 
 int RMcontroller::joystick_open(char *cp_js_dev_name, int i4_block)
@@ -291,6 +311,7 @@ void RMcontroller::initJoystick()
         printf("no input joystick. wait 1s...\n");
         sleep(1);
     }
+    printf("[JOYSTICK]find joystick!\n");
     sleep(2);
     js_fd = joystick_open("/dev/input/js0", 1);
     if (js_fd < 0) {
@@ -350,6 +371,24 @@ void RMcontroller::pubAll()
     axes0ud_pub.publish(axes0ud_f);
     axes1lr_pub.publish(axes1lr_f);
     axes1ud_pub.publish(axes1ud_f);
+}
+
+void RMcontroller::resetAllKey(){
+    myjoybutton.start = false;
+    myjoybutton.back = false;
+    myjoybutton.home = false;
+    myjoybutton.but[8] = false;
+    myjoybutton.but[1] = false;
+    myjoybutton.but[2] = false;
+    myjoybutton.but[3] = false;
+    myjoybutton.but[4] = false;
+    myjoybutton.but[5] = false;
+    myjoybutton.but[6] = false;
+    myjoybutton.but[7] = false;
+    myjoybutton.axisleft_lr = 0;
+    myjoybutton.axisleft_ud = 0;
+    myjoybutton.axisright_lr = 0;
+    myjoybutton.axisright_ud = 0;
 }
 
 void RMcontroller::display()

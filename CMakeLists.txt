@@ -29,3 +29,9 @@ target_link_libraries(remote_controller
   ${catkin_LIBRARIES}
   ${OpenCV_LIBS}
 )
+
+set_target_properties(remote_controller
+    PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY
+    ${PROJECT_SOURCE_DIR}/bin
+)

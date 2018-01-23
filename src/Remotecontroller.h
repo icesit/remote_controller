@@ -15,6 +15,9 @@
 #include "std_msgs/Float64.h"
 #include "std_msgs/Bool.h"
 
+#define ONESECOND 50
+using namespace std;
+
 struct joystick_button{
 int fd = 0;//存放手柄文件号
 int up = 0;
@@ -54,7 +57,8 @@ class RMcontroller
 public:
     RMcontroller(ros::NodeHandle *_nh);
     ~RMcontroller();
-    void work();
+    bool work();
+    void resetAllKey();
 private:
     ros::NodeHandle *nh;
     //store joystick data
@@ -64,6 +68,7 @@ private:
     js_event jse;
     AXES_T* tp_axes;
     char number_of_axes, number_of_btns, js_name_str[128];
+    int cnt;
 
     ros::Publisher btn8_pub;
     ros::Publisher btn1_pub;
