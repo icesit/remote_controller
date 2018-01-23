@@ -286,6 +286,12 @@ void RMcontroller::initPublisher()
 
 void RMcontroller::initJoystick()
 {
+    while(access("/dev/input/js0", 0) == -1)
+    {
+        printf("no input joystick. wait 1s...\n");
+        sleep(1);
+    }
+    sleep(2);
     js_fd = joystick_open("/dev/input/js0", 1);
     if (js_fd < 0) {
         LOG_ERR("open /dev/input/js0 failed.\n");

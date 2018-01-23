@@ -11,7 +11,6 @@
 #include <string.h>
 #include <linux/joystick.h>
 #include "listop.h"
-#include <stdlib.h>
 #include "ros/ros.h"
 #include "std_msgs/Float64.h"
 #include "std_msgs/Bool.h"
