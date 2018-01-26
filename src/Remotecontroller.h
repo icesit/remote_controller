@@ -15,7 +15,7 @@
 #include "std_msgs/Float64.h"
 #include "std_msgs/Bool.h"
 
-#define ONESECOND 50
+#define ONESECOND 100
 using namespace std;
 
 struct joystick_button{
