@@ -17,6 +17,7 @@
 
 #define ONESECOND 100
 using namespace std;
+const double deadzone = 0.1;
 
 struct joystick_button{
 int fd = 0;//存放手柄文件号

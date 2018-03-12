@@ -356,6 +356,22 @@ void RMcontroller::pubAll()
     axes0ud_f.data = - (double)(myjoybutton.axisleft_ud) / 32768;
     axes1lr_f.data = - (double)(myjoybutton.axisright_lr) / 32768;
     axes1ud_f.data = - (double)(myjoybutton.axisright_ud) / 32768;
+    if(axes0lr_f.data<deadzone && axes0lr_f.data>-deadzone)
+    {
+        axes0lr_f.data=0;
+    }
+    if(axes0ud_f.data<deadzone && axes0ud_f.data>-deadzone)
+    {
+        axes0ud_f.data=0;
+    }
+    if(axes1lr_f.data<deadzone && axes1lr_f.data>-deadzone)
+    {
+        axes1lr_f.data=0;
+    }
+    if(axes1ud_f.data<deadzone && axes1ud_f.data>-deadzone)
+    {
+        axes1ud_f.data=0;
+    }
     btn8_pub.publish(btn8_b);
     btn1_pub.publish(btn1_b);
     btn2_pub.publish(btn2_b);
